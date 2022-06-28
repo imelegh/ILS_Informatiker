@@ -1,7 +1,7 @@
 /* ####################################################
 Einsendeaufgabe 3.4
 ##################################################### */
-// Taschenrechner
+
 #include <iostream>
 
 using namespace std;
