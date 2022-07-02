@@ -25,14 +25,15 @@ kiste einlesen(int kistenNummer)
 {
     kiste aKiste;
     aKiste.kNummer = kistenNummer;
-    cout<< "\nGeben Sie bitte die Daten der Kiste Nr: "<< kistenNummer << " ein:\n\n";
+    cout<< "\n\nDaten der Kiste Nr: "<< kistenNummer << " eingeben:\n";
+    cout<< "---------------------------------\n";
     cout<<"Breite: ";
     cin>>aKiste.breite;
     cout<<"Hoehe:  ";
     cin>>aKiste.hoehe;
     cout<<"Laenge:  ";
     cin>>aKiste.laenge;
-    cout<<"\nDie Daten fuer die Kiste mit Nummer: " << kistenNummer << " wurde eingetragen.\n\n";
+    cout<<"\nDie Daten fuer die Kiste mit Nummer " << kistenNummer << " wurde eingetragen.\n\n";
 
     return aKiste;
 }
@@ -50,7 +51,7 @@ void auslesen(kiste fLager[], int zeiger)
 
 }
 
-// Funktion für die Suche nach der Index des Elementes des Lagers mit der Angabe der Kistennummer..
+// Funktion für die Suche nach der Index des Elementes des Lagers mit der Angabe der Kistennummer.
 
 int sucheKiste(kiste fLager[], int kistenNummer)
 {
@@ -103,8 +104,8 @@ void eingabe(kiste fLager[], int kistenNummer)
 
 void eingeben(kiste *);
 void loeschen(kiste *);
-void ausgeben(kiste *, int);
-void aendern(kiste *, int);
+void ausgeben(kiste *);
+void aendern(kiste *);
 void auflisten(kiste *);
 
 
@@ -126,8 +127,6 @@ int main()
 
    // Auswahlmenü
 
-
-
     do
     {
         short unsigned int menuWahl;
@@ -146,37 +145,20 @@ int main()
         {
         case 1:
                eingeben(lager);
-               break;
+            break;
         case 2:
                loeschen(lager);
-               break;
+            break;
         case 3:
-               cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
-               cin >> kistenNummer;
-               aendern(lager, kistenNummer);
-               break;
+
+               aendern(lager);
+            break;
 
         case 4:
-               cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
-               cin >> kistenNummer;
-               ausgeben(lager, kistenNummer);
-               break;
+               ausgeben(lager);
+            break;
         case 5:
-            zaehler = 0;
-            cout << "\n\nListe der vorhandenen Kisten:\n";
-            cout << "=============================\n\n";
-            for (kiste element : lager)
-                if (element.kNummer !=0 )
-                {
-                    zaehler++;
-                    cout << "Kistennummer:\t" << element.kNummer;
-                    cout<<"\nBreite:\t" << element.breite<<"\n";
-                    cout<<"Hoehe:\t" << element.hoehe<<"\n";
-                    cout<<"Laenge:\t"<< element.laenge<<"\n";
-                    cout<<"Volumen:  " <<element.breite * element.hoehe * element.laenge<<"\n\n";
-                }
-            cout << "\nEs wurde " << zaehler << " Kiste(n) gefunden.\n";
-
+               auflisten(lager);
             break;
          case 6:
             menuzeigen = false;
@@ -184,19 +166,10 @@ int main()
             break;
         default:
             cout << "Sie haben keine gueltige Auswahl getroffen!\n";
-
         }
     } while (menuzeigen);
 
-    // Suche ob es Platz gibt
-
-
-
-
-
-
-
-    return 0;
+      return 0;
 }
 
 // Funktion für Eingaben
@@ -233,6 +206,9 @@ void eingeben(kiste fLager[])
     }
 }
 
+
+// Funktion für Löschen
+
 void loeschen(kiste fLager[])
 {
 
@@ -249,29 +225,59 @@ void loeschen(kiste fLager[])
 }
 
 
+// Funktion für Ausgeben
 
-void ausgeben(kiste fLager[], int kistenNummer)
+
+void ausgeben(kiste fLager[])
 {
+    cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
+    cin >> kistenNummer;
     zeiger = sucheKiste(fLager, kistenNummer);
     if (zeiger != -1)
     {
-        cout << "\nDie Daten fuer die Kiste mit Nummer " << kistenNummer << ": \n";
+        cout << "\n\nDie Daten fuer die Kiste mit Nummer " << kistenNummer << ": \n";
+        cout << "-------------------------------------";
         auslesen(fLager, zeiger);
     }
     else
         cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n";
 }
 
-void aendern(kiste fLager[], int kistenNummer)
+
+// Funktion für Ändern
+
+void aendern(kiste fLager[])
 {
+    cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
+    cin >> kistenNummer;
 
     // Vor der Änderung werden die Daten der Kiste ausgegeben
-    ausgeben(fLager, kistenNummer);
+    ausgeben(fLager);
 
     cout <<"\n Jetzt die neue Daten eingeben:\n";
+    cout << "-----------------------------\n";
     eingabe(fLager, kistenNummer);
 
     cout << "\nDie Daten der Kiste wurden geaendert.\n";
 }
 
 
+// Funtion für Auflisten
+
+void auflisten(kiste fLager[])
+{
+    zaehler = 0;
+    cout << "\n\nListe der vorhandenen Kisten:\n";
+    cout << "=============================\n\n";
+    for (int i = 0; i<lagerGroesse; i++)
+       if (fLager[i].kNummer !=0 )
+       {
+            zaehler++;
+            cout << "\nKistennummer: " << fLager[i].kNummer << "\n";
+            cout << "----------------------";
+            auslesen(fLager, i);
+        }
+
+     cout << "\nEs wurde " << zaehler << " Kiste(n) gefunden.\n";
+
+}
