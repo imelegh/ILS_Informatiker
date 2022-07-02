@@ -104,8 +104,8 @@ void eingabe(kiste fLager[], int kistenNummer)
 void eingeben(kiste *);
 void loeschen(kiste *);
 void ausgeben(kiste *, int);
-void aendern();
-void auflisten();
+void aendern(kiste *, int);
+void auflisten(kiste *);
 
 
 
@@ -151,16 +151,11 @@ int main()
                loeschen(lager);
                break;
         case 3:
+               cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
+               cin >> kistenNummer;
+               aendern(lager, kistenNummer);
+               break;
 
-            cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
-            cin >> kistenNummer;
-
-            // Vor der Änderung werden die Daten der Kiste ausgegeben
-            ausgeben(lager, kistenNummer);
-            cout <<"\n Jetzt die neue Daten eingeben:\n";
-            eingabe(lager, kistenNummer);
-            cout << "\nDie Daten der Kiste wurden geaendert.\n";
-            break;
         case 4:
                cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
                cin >> kistenNummer;
@@ -267,5 +262,16 @@ void ausgeben(kiste fLager[], int kistenNummer)
         cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n";
 }
 
+void aendern(kiste fLager[], int kistenNummer)
+{
+
+    // Vor der Änderung werden die Daten der Kiste ausgegeben
+    ausgeben(fLager, kistenNummer);
+
+    cout <<"\n Jetzt die neue Daten eingeben:\n";
+    eingabe(fLager, kistenNummer);
+
+    cout << "\nDie Daten der Kiste wurden geaendert.\n";
+}
 
 
