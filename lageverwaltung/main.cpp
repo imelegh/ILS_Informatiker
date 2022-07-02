@@ -11,6 +11,7 @@ int kNummer;
 int breite;
 int hoehe;
 int laenge;
+
 };
 
 kiste einlesen(int kisteNummer)
@@ -36,6 +37,7 @@ void auslesen(kiste fLager[], int zeiger)
     cout<<"\nBreite:\t"<<fLager[zeiger].breite<<"\n";
     cout<<"Hoehe:\t"<<fLager[zeiger].hoehe<<"\n";
     cout<<"Laenge:\t"<<fLager[zeiger].laenge<<"\n";
+    cout<<"Volumen:  "<<fLager[zeiger].laenge * fLager[zeiger].hoehe * fLager[zeiger].laenge<<"\n";
 
 
 }
@@ -74,6 +76,10 @@ int sucheKiste(kiste fLager[], int kisteNummer)
 
 int main()
 {
+    int kisteNummer;
+    int index;
+    bool menuzeigen = true;
+    int zaehler;
 
     // Für den Lager ein Feld mit Elementen Typ kiste erstellen
 
@@ -86,8 +92,8 @@ int main()
 
    // Auswahlmenü
 
-    bool menuzeigen = true;
-    int index;
+
+
     do
     {
         short unsigned int menuWahl;
@@ -111,7 +117,6 @@ int main()
            index = sucheKiste(lager,0);
            if (index != -1)
            {
-              int kisteNummer;
               bool vorhanden = false;
               do
               {
@@ -127,7 +132,7 @@ int main()
                 }
                 else
                 {
-                    cout << "\nDie Kistenummer ist schon vorhanden, waehlen Sie eine andere Zahl aus!\n";
+                    cout << "\nDie Kistenummer ist schon vorhanden, waehlen Sie eine andere Zahl aus!\n\n";
                     vorhanden = true;
                  }
               } while (vorhanden);
@@ -137,12 +142,24 @@ int main()
             break;
         case 2:
 
-
+            cout << "\nZu loeschen bitte geben Sie die Nummer der Kiste ein : ";
+            cin >> kisteNummer;
+            index = sucheKiste(lager, kisteNummer);
+            if (index != -1)
+            {
+               lager[index].kNummer = 0;
+               cout << "\nDie Kiste mit Nummer: " << kisteNummer << " wurde geloescht.\n";
+            }
+            else
+                cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n\n";
             break;
+
+
+
         case 3:
             break;
         case 4:
-            int kisteNummer;
+
             cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
             cin >> kisteNummer;
             index = sucheKiste(lager, kisteNummer);
@@ -152,14 +169,29 @@ int main()
                 auslesen(lager, index);
             }
             else
-                cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n\n";
+                cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n";
             break;
 
         case 5:
+            zaehler = 0;
+            cout << "\n\nListe der vorhandenen Kisten:\n";
+            cout << "=============================\n\n";
+            for (kiste element : lager)
+                if (element.kNummer !=0 )
+                {
+                    zaehler++;
+                    cout << "Kistenummer:\t" << element.kNummer;
+                    cout<<"\nBreite:\t" << element.breite<<"\n";
+                    cout<<"Hoehe:\t" << element.hoehe<<"\n";
+                    cout<<"Laenge:\t"<< element.laenge<<"\n";
+                    cout<<"Volumen:  " <<element.breite * element.hoehe * element.laenge<<"\n\n";
+                }
+            cout << "\nEs wurde " << zaehler << " Kiste(n) gefunden.\n";
+
             break;
          case 6:
             menuzeigen = false;
-            cout<<"\nAuf Wiedersehen! (aus dem Konsol auszutreten druecken Sie ENTER)\n";
+            cout<<"\nAuf Wiedersehen! (aus dem Konsol auszutreten druecken Sie ENTER)\n\n";
             break;
         default:
             cout << "Sie haben keine gueltige Auswahl getroffen!\n";
