@@ -14,22 +14,30 @@ int laenge;
 
 };
 
-kiste einlesen(int kisteNummer)
+int kistenNummer;
+int zeiger;
+bool menuzeigen = true;
+int zaehler;
+
+// Funktion für die Eingabe der Grunddateien einer Kiste (ohne Volumen)
+
+kiste einlesen(int kistenNummer)
 {
     kiste aKiste;
-    aKiste.kNummer = kisteNummer;
-    cout<< "\nGeben Sie bitte die Daten der Kiste Nr: "<< kisteNummer << " ein:\n\n";
+    aKiste.kNummer = kistenNummer;
+    cout<< "\nGeben Sie bitte die Daten der Kiste Nr: "<< kistenNummer << " ein:\n\n";
     cout<<"Breite: ";
     cin>>aKiste.breite;
     cout<<"Hoehe:  ";
     cin>>aKiste.hoehe;
     cout<<"Laenge:  ";
     cin>>aKiste.laenge;
-    cout<<"\nDie Daten fuer die Kiste mit Nummer: " << kisteNummer << " wurde eingetragen.\n\n";
+    cout<<"\nDie Daten fuer die Kiste mit Nummer: " << kistenNummer << " wurde eingetragen.\n\n";
 
     return aKiste;
 }
 
+// Funktion für Ausgabe der Dateien einer Kiste (Volumen ist errechnet)
 
 void auslesen(kiste fLager[], int zeiger)
 {
@@ -42,25 +50,15 @@ void auslesen(kiste fLager[], int zeiger)
 
 }
 
+// Funktion für die Suche nach der Index des Elementes des Lagers mit der Angabe der Kistennummer..
 
-int volumen (kiste aKiste)
-{
-int volWert;
-volWert = aKiste.hoehe * aKiste.breite * aKiste.laenge;
-return volWert;
-}
-
-
-
-// Funktion für die Suche nach der Index des Elementes des Feldes.
-
-int sucheKiste(kiste fLager[], int kisteNummer)
+int sucheKiste(kiste fLager[], int kistenNummer)
 {
     int zeiger = 0;
     bool gefunden = false;
     do
     {
-           if (fLager[zeiger].kNummer == kisteNummer)
+           if (fLager[zeiger].kNummer == kistenNummer)
               gefunden = true;
            else
                zeiger++;
@@ -74,18 +72,26 @@ int sucheKiste(kiste fLager[], int kisteNummer)
 
 }
 
+// Funktionen für die Auswahlmenü
+
+void eingeben(kiste *);
+void loeschen(kiste *);
+void aendern();
+void auflisten();
+
+
+
+
+
 int main()
 {
-    int kisteNummer;
-    int index;
-    bool menuzeigen = true;
-    int zaehler;
+
 
     // Für den Lager ein Feld mit Elementen Typ kiste erstellen
 
     kiste lager[lagerGroesse];
 
-    // Die Kistenummer auf 0 initialisieren.
+    // Die Kistennummer auf 0 initialisieren.
 
     for (int i=0; i<lagerGroesse; i++)
         lager[i].kNummer = 0;
@@ -111,62 +117,30 @@ int main()
         switch(menuWahl)
         {
         case 1:
-
-            // Kistenummer 0 ist für leeren Platz in dem Feld lager, -1 bedeutet die Suche nach einen leeren Platz war unerfolgreich
-
-           index = sucheKiste(lager,0);
-           if (index != -1)
-           {
-              bool vorhanden = false;
-              do
-              {
-                cout << "\n\nBitte geben Sie eine positive Zahl fuer die Nummer der Kiste: ";
-                cin >> kisteNummer;
-
-                if (sucheKiste(lager, kisteNummer) == -1)
-                {
-                    vorhanden = false;
-                    lager[index] = einlesen(kisteNummer);
-
-
-                }
-                else
-                {
-                    cout << "\nDie Kistenummer ist schon vorhanden, waehlen Sie eine andere Zahl aus!\n\n";
-                    vorhanden = true;
-                 }
-              } while (vorhanden);
-
-           }
+               eingeben(lager);
 
             break;
         case 2:
+               loeschen(lager);
 
-            cout << "\nZu loeschen bitte geben Sie die Nummer der Kiste ein : ";
-            cin >> kisteNummer;
-            index = sucheKiste(lager, kisteNummer);
-            if (index != -1)
-            {
-               lager[index].kNummer = 0;
-               cout << "\nDie Kiste mit Nummer: " << kisteNummer << " wurde geloescht.\n";
-            }
-            else
-                cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n\n";
             break;
-
-
-
         case 3:
+
+
+
+
+
+
             break;
         case 4:
 
             cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
-            cin >> kisteNummer;
-            index = sucheKiste(lager, kisteNummer);
-            if (index != -1)
+            cin >> kistenNummer;
+            zeiger = sucheKiste(lager, kistenNummer);
+            if (zeiger != -1)
             {
-                cout << "\nDie Daten fuer die Kiste mit Nummer " << kisteNummer << ": \n";
-                auslesen(lager, index);
+                cout << "\nDie Daten fuer die Kiste mit Nummer " << kistenNummer << ": \n";
+                auslesen(lager, zeiger);
             }
             else
                 cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n";
@@ -180,7 +154,7 @@ int main()
                 if (element.kNummer !=0 )
                 {
                     zaehler++;
-                    cout << "Kistenummer:\t" << element.kNummer;
+                    cout << "Kistennummer:\t" << element.kNummer;
                     cout<<"\nBreite:\t" << element.breite<<"\n";
                     cout<<"Hoehe:\t" << element.hoehe<<"\n";
                     cout<<"Laenge:\t"<< element.laenge<<"\n";
@@ -209,4 +183,55 @@ int main()
 
     return 0;
 }
+
+// Funktion für Eingaben
+
+void eingeben(kiste fLager[])
+{
+    // kistenNummer 0 ist für leeren Platz in dem Feld fLager, -1 bedeutet die Suche nach einen leeren Platz war unerfolgreich
+
+   zeiger = sucheKiste(fLager,0);
+   if (zeiger != -1)
+   {
+      bool vorhanden = false;
+      do
+      {
+        cout << "\n\nBitte geben Sie eine positive Zahl fuer die Nummer der Kiste: ";
+        cin >> kistenNummer;
+
+        // Prüfen ob es eine Kistennummer mit dem angegeben Wert schon gibt (-1 bedeutet es gibt keine Kiste mit dieser Nummer)
+
+        if (sucheKiste(fLager, kistenNummer) == -1)
+        {
+            vorhanden = false;
+            fLager[zeiger] = einlesen(kistenNummer);
+
+
+        }
+        else
+        {
+            cout << "\nDie Kistennummer ist schon vorhanden, waehlen Sie eine andere Zahl aus!\n\n";
+            vorhanden = true;
+         }
+      } while (vorhanden);
+
+    }
+}
+
+void loeschen(kiste fLager[])
+{
+
+    cout << "\nZu loeschen bitte geben Sie die Nummer der Kiste ein : ";
+    cin >> kistenNummer;
+    zeiger = sucheKiste(fLager, kistenNummer);
+    if (zeiger != -1)
+    {
+       fLager[zeiger].kNummer = 0;
+       cout << "\nDie Kiste mit Nummer: " << kistenNummer << " wurde geloescht.\n";
+    }
+    else
+        cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n\n";
+}
+
+
 
