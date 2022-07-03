@@ -1,10 +1,14 @@
+/* ######################################################
+Einsendeaufgabe 4
+###################################################### */
+
 #include <iostream>
 
 using namespace std;
 
-int lagerGroesse = 50;
 
 // eine Structur für die Kisten erstellen
+
 struct kiste
 {
 int kNummer;
@@ -14,10 +18,15 @@ int laenge;
 
 };
 
+// Variablen
+
+
+int lagerGroesse = 50;
 int kistenNummer;
 int zeiger;
 bool menuzeigen = true;
 int zaehler;
+
 
 // Funktion für die Eingabe der Grunddateien einer Kiste (ohne Volumen)
 
@@ -99,8 +108,16 @@ void eingabe(kiste fLager[], int kistenNummer)
     } while (vorhanden);
 }
 
+// Konsolprogramm anhalten im MS Windows System.
 
-// Funktionen für die Auswahlmenü
+void anhalten()
+{
+    cout << "\nDruecken Sie eine beliebige Taste, um fortzufahren";
+    _getwch();
+}
+
+
+// Prototypen für die Auswahlmenü
 
 void eingeben(kiste *);
 void loeschen(kiste *);
@@ -109,7 +126,7 @@ void aendern(kiste *);
 void auflisten(kiste *);
 
 
-
+// *** Hauptprogram  ***
 
 
 int main()
@@ -165,17 +182,23 @@ int main()
             cout<<"\nAuf Wiedersehen! (aus dem Konsol auszutreten druecken Sie ENTER)\n\n";
             break;
         default:
-            cout << "Sie haben keine gueltige Auswahl getroffen!\n";
+            cout << "\nSie haben keine gueltige Auswahl getroffen!\n";
         }
     } while (menuzeigen);
 
       return 0;
 }
 
+// *** Definition der Funktionen ***
+
+
 // Funktion für Eingaben
 
 void eingeben(kiste fLager[])
 {
+    cout << "\nEingabe einer neuen Kiste\n";
+    cout << "-------------------------\n";
+
     // kistenNummer 0 ist für leeren Platz in dem Feld fLager, -1 bedeutet die Suche nach einen leeren Platz war unerfolgreich
 
    zeiger = sucheKiste(fLager,0);
@@ -184,7 +207,7 @@ void eingeben(kiste fLager[])
       bool vorhanden = false;
       do
       {
-        cout << "\n\nBitte geben Sie eine positive Zahl fuer die Nummer der Kiste: ";
+        cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
         cin >> kistenNummer;
 
         // Prüfen ob es eine Kistennummer mit dem angegeben Wert schon gibt (-1 bedeutet es gibt keine Kiste mit dieser Nummer)
@@ -198,12 +221,14 @@ void eingeben(kiste fLager[])
         }
         else
         {
-            cout << "\nDie Kistennummer ist schon vorhanden, waehlen Sie eine andere Zahl aus!\n\n";
+            cout << "Problem! Die Kistennummer ist schon vorhanden, waehlen Sie eine andere Zahl aus!\n\n";
             vorhanden = true;
          }
       } while (vorhanden);
 
+
     }
+  anhalten();
 }
 
 
@@ -211,6 +236,8 @@ void eingeben(kiste fLager[])
 
 void loeschen(kiste fLager[])
 {
+    cout << "\nLoeschen der Daten einer vorhandenen Kiste\n";
+    cout << "------------------------------------------\n";
 
     cout << "\nZu loeschen bitte geben Sie die Nummer der Kiste ein : ";
     cin >> kistenNummer;
@@ -222,6 +249,7 @@ void loeschen(kiste fLager[])
     }
     else
         cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n\n";
+    anhalten();
 }
 
 
@@ -230,6 +258,9 @@ void loeschen(kiste fLager[])
 
 void ausgeben(kiste fLager[])
 {
+    cout << "\nAnzeigen der Daten einer vorhandenen Kiste\n";
+    cout << "------------------------------------------\n";
+
     cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
     cin >> kistenNummer;
     zeiger = sucheKiste(fLager, kistenNummer);
@@ -241,6 +272,7 @@ void ausgeben(kiste fLager[])
     }
     else
         cout << "\nKeine Kiste mit dieser Nummer wurde gefunden.\n";
+   anhalten();
 }
 
 
@@ -248,17 +280,18 @@ void ausgeben(kiste fLager[])
 
 void aendern(kiste fLager[])
 {
+    cout << "\nAendern der Daten einer vorhandenen Kiste\n";
+    cout << "-----------------------------------------\n";
+
     cout << "\nBitte geben Sie die Nummer der Kiste ein: ";
     cin >> kistenNummer;
 
-    // Vor der Änderung werden die Daten der Kiste ausgegeben
-    ausgeben(fLager);
-
     cout <<"\n Jetzt die neue Daten eingeben:\n";
-    cout << "-----------------------------\n";
-    eingabe(fLager, kistenNummer);
+
+    eingabe(fLager, kistenNummer); // Auch die Kistennummer kann geändert werden.
 
     cout << "\nDie Daten der Kiste wurden geaendert.\n";
+    anhalten();
 }
 
 
@@ -266,18 +299,21 @@ void aendern(kiste fLager[])
 
 void auflisten(kiste fLager[])
 {
+    cout << "\nListe der vorhandenen Kisten:\n";
+    cout << "-----------------------------\n";
+
     zaehler = 0;
-    cout << "\n\nListe der vorhandenen Kisten:\n";
-    cout << "=============================\n\n";
+
     for (int i = 0; i<lagerGroesse; i++)
        if (fLager[i].kNummer !=0 )
        {
             zaehler++;
             cout << "\nKistennummer: " << fLager[i].kNummer << "\n";
-            cout << "----------------------";
+
             auslesen(fLager, i);
         }
 
      cout << "\nEs wurde " << zaehler << " Kiste(n) gefunden.\n";
+     anhalten();
 
 }
