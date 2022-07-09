@@ -1,5 +1,5 @@
 /* ###############################################
-Einfach verkettete Liste mit intelligenten Zeigern
+Doppelt verkettete Liste mit intelligenten Zeigern
 #################################################*/
 #include <iostream>
 //für die intelligenten Zeiger
