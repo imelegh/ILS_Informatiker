@@ -12,8 +12,8 @@ public:
     void init();
     void fernseherEinAus();
     void programmWaehlen(int aenderung);
-    void lautstaerkeHerauf();
-    void lautstaerkeHerunter();
+    void lautstaerkeHerauf(int aenderung);
+    void lautstaerkeHerunter(int aenderung);
     void fernseherStatusAusgeben();
     void programmWahlAusgeben();
     void lautstaerkeAusgeben();
@@ -47,27 +47,34 @@ void Fernseher::programmWaehlen(int aenderung)
     }
 }
 
-void Fernseher::lautstaerkeHerauf()
+// Lautstärke schrittweise erhöhen
+
+void Fernseher::lautstaerkeHerauf(int aenderung)
 {
    if (eingeschaltet)
    {
        int max = 10;  // Maximumlautstärke ist 10
 
-       lautstaerke += 1;
-       if (lautstaerke > max)
+       if (lautstaerke + aenderung > max)
            lautstaerke = 10;
+       else
+           lautstaerke += aenderung;
+
    }
 }
 
-void Fernseher::lautstaerkeHerunter()
+// Lautstärke schrittweise vermindern
+
+void Fernseher::lautstaerkeHerunter(int aenderung)
 {
    if (eingeschaltet)
    {
        int min = 0; // Minimumlautstärke ist 0
 
-       lautstaerke -= 1;
-       if (lautstaerke < min)
+       if (lautstaerke - aenderung < min)
            lautstaerke = 0;
+       else
+           lautstaerke -= aenderung;
    }
 }
 
@@ -95,8 +102,6 @@ void Fernseher::lautstaerkeAusgeben()
 
 
 
-
-
 int main()
 {
     // Instanz für den Fernseher dynamisch über einen Zeiger erstellen
@@ -106,11 +111,37 @@ int main()
 
     // Fernseher einschalten und Status ausgeben
 
+    fernseher1->fernseherEinAus();
+    fernseher1->fernseherStatusAusgeben();
 
+    // Programm ändern und Programmauswahl ausgeben
 
+    fernseher1->programmWaehlen(10); // Fernsehprogramm 10 auswählen
+    fernseher1->programmWahlAusgeben();
 
+    // Falsches Programm ausgewählt
 
+    fernseher1->programmWaehlen(101);
+    fernseher1->programmWahlAusgeben();
+
+    // Lautstärke erhöhen und ausgeben
+
+    fernseher1->lautstaerkeHerauf(10);
+    fernseher1->lautstaerkeAusgeben();
+
+    // Laustärke reduzieren und ausgeben
+
+    fernseher1->lautstaerkeHerunter(8);
+    fernseher1->lautstaerkeAusgeben();
+
+    // Fernseher ausschalten und Status ausgeben
+
+    fernseher1->fernseherEinAus();
+    fernseher1->fernseherStatusAusgeben();
+
+    // Zeiger freigeben
 
     delete (fernseher1);
+
     return 0;
 }
