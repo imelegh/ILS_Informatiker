@@ -1,3 +1,8 @@
+/* ######################################################
+Einsendeaufgabe 6.1
+###################################################### */
+
+
 #include <iostream>
 
 using namespace std;
@@ -19,7 +24,6 @@ public:
     void lautstaerkeAusgeben();
 
 };
-
 
 
 void Fernseher::init()
@@ -81,9 +85,9 @@ void Fernseher::lautstaerkeHerunter(int aenderung)
 void Fernseher::fernseherStatusAusgeben()
 {
     if (eingeschaltet)
-        cout << "\n Fernseher ist eingeschaltet\n";
+        cout << "\nFernseher ist eingeschaltet\n";
     else
-        cout  << "\n Fernseher ist ausgeschaltet\n";
+        cout  << "\nFernseher ist ausgeschaltet\n";
 }
 
 void Fernseher::programmWahlAusgeben()
@@ -126,7 +130,7 @@ int main()
 
     // Lautstärke erhöhen und ausgeben
 
-    fernseher1->lautstaerkeHerauf(10);
+    fernseher1->lautstaerkeHerauf(8);
     fernseher1->lautstaerkeAusgeben();
 
     // Laustärke reduzieren und ausgeben
