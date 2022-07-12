@@ -2,8 +2,6 @@
 
 using namespace std;
 
-// die Vereinbarung der Klasse
-
 class Fernseher
 {
     bool eingeschaltet;
@@ -12,10 +10,14 @@ class Fernseher
 
 public:
     void init();
-    void schaltenEinAus();
+    void fernseherEinAus();
     void programmWaehlen(int aenderung);
     void lautstaerkeHerauf();
     void lautstaerkeHerunter();
+    void fernseherStatusAusgeben();
+    void programmWahlAusgeben();
+    void lautstaerkeAusgeben();
+
 };
 
 
@@ -27,13 +29,9 @@ void Fernseher::init()
     lautstaerke = 5;
 }
 
-void Fernseher::schaltenEinAus()
+void Fernseher::fernseherEinAus()
 {
     eingeschaltet = eingeschaltet ? false:true;
-    if (eingeschaltet)
-        cout << "\n Fernseher ist eingeschaltet\n";
-    else
-        cout  << "\n Fernseher ist ausgeschaltet\n";
 }
 
 void Fernseher::programmWaehlen(int aenderung)
@@ -41,46 +39,78 @@ void Fernseher::programmWaehlen(int aenderung)
 {
    if (eingeschaltet)
    {
+       // Programmauswahl von 0 bis 100 möglich
        if (aenderung< 1 || aenderung > 100)
            cout << "\nUngueltige Programmauswahl\n";
        else
-       {
            programm = aenderung;
-           cout << "\nProgramm: " << programm << '\n';
-       }
     }
-
 }
 
 void Fernseher::lautstaerkeHerauf()
 {
    if (eingeschaltet)
    {
-       int max = 10;
+       int max = 10;  // Maximumlautstärke ist 10
 
        lautstaerke += 1;
        if (lautstaerke > max)
            lautstaerke = 10;
    }
-
-   cout << "\nLatustaerke: " << lautstaerke << '\n';
 }
 
 void Fernseher::lautstaerkeHerunter()
 {
    if (eingeschaltet)
    {
-       int min = 0;
+       int min = 0; // Minimumlautstärke ist 0
 
        lautstaerke -= 1;
        if (lautstaerke < min)
            lautstaerke = 0;
    }
-   cout << "\nLatustaerke: " << lautstaerke << '\n';
 }
+
+void Fernseher::fernseherStatusAusgeben()
+{
+    if (eingeschaltet)
+        cout << "\n Fernseher ist eingeschaltet\n";
+    else
+        cout  << "\n Fernseher ist ausgeschaltet\n";
+}
+
+void Fernseher::programmWahlAusgeben()
+{
+    if (eingeschaltet)
+        cout << "\nProgramm: " << programm << " ist ausgewaehlt\n";
+
+}
+
+void Fernseher::lautstaerkeAusgeben()
+{
+
+    if (eingeschaltet)
+         cout << "\nLautstaerke: " << lautstaerke << '\n';
+}
+
+
+
+
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    // Instanz für den Fernseher dynamisch über einen Zeiger erstellen
+    Fernseher* fernseher1;
+    fernseher1 = new Fernseher();
+    fernseher1->init();
+
+    // Fernseher einschalten und Status ausgeben
+
+
+
+
+
+
+    delete (fernseher1);
     return 0;
 }
