@@ -1,6 +1,7 @@
-/* ###############################################
-Doppelt verkettete Liste mit intelligenten Zeigern
-#################################################*/
+/*	######################################################
+    Einsendeaufgabe 5.2
+    ###################################################### */
+
 #include <iostream>
 //für die intelligenten Zeiger
 #include <memory>
@@ -11,7 +12,7 @@ struct listenelement
 {
     string daten;
     shared_ptr<listenelement> next;
-    shared_ptr<listenelement> last;
+    shared_ptr<listenelement> last;  // *** Melegh
 };
 
 //Eine Funktion zum Anhängen von Elementen an die Liste
@@ -29,7 +30,7 @@ void anhaengen(string datenneu, shared_ptr<listenelement> listenanfang)
     hilfszeiger->next = make_shared<listenelement>();
 
     // die Adresse des Vorgängerelements aufnehmen
-    hilfszeiger->next->last = hilfszeiger; // *** Melegh
+    hilfszeiger->next->last = hilfszeiger;   // *** Melegh
 
     //den Hilfszeiger auf das neue Element setzen
     hilfszeiger = hilfszeiger->next;
